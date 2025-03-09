@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "flask-video-to-audio"
+version = "0.1.0"
+description = "A simple Flask app for extracting audio from video files"
+authors = ["Your Name"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.2.0"
+gunicorn = "^20.1.0"
+moviepy = "^1.0.3"
+ffmpeg-python = "^0.2.0"
+werkzeug = "^2.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
