@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, send_file, jsonify
 import os
-from moviepy.editor import VideoFileClip
+from moviepy import VideoFileClip
 
 app = Flask(__name__)
 UPLOAD_FOLDER = "uploads"
