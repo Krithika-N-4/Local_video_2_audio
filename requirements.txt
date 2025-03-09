@@ -1,5 +1,9 @@
-flask
-flask-cors
+flaskpip install --upgrade pip
+pip uninstall moviepy
+pip install moviepy
+
+flask-corspip install moviepy
+
 gunicorn
 moviepy
 ffmpeg-python
