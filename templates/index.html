@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <title>Video 2 Audio</title>
+    <style>
+        body {
+            background: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #e0e0e0; /* Match footer background */
+            padding: 25px 0;
+            text-align: center;
+            z-index: 1000; /* Ensure it's above other elements */
+        }
+        
+        header h1 {
+            margin: 0; /* Fix missing semicolon */
+            font-size: 2.5em;
+            color: #333;
+            font-family: 'Karla', sans-serif;
+            font-weight: 400;
+        }
+        
+
+        .custom-file-upload, button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 20px;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: "Poppins", serif;
+            font-weight: 400;
+            box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+
+        .custom-file-upload:hover, button:hover {
+            background: #cccccc;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        #fileName {
+            font-weight: bold;
+            font-family: "Montserrat", sans-serif;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        #fileContainer {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between file name and icon */
+            font-weight: bold;
+            font-family: "Montserrat", sans-serif;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            color: #333;
+        }
+        
+        #folderIcon {
+            width: 24px; /* Adjust size as needed */
+            height: 24px;
+            display: none; /* Initially hidden */
+        }
+        
+
+        #extractBtn {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 50%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 5px;
+            display: none;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: lightgreen;
+            border-radius: 5px;
+            transition: width 0.7s ease-in-out;
+        }
+
+        .audio-player {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #downloadBtn {
+            display: none;
+            margin-top: 20px;
+        }
+
+        footer {
+            background: #e0e0e0;
+            padding: 5px;
+            font-size: 0.9em;
+            color: #333;
+            font-family: "Poppins", serif;
+            font-weight: 300;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Video 2 Audio</h1>
+    </header>
+
+    <!-- Custom File Upload Button -->
+    <label for="videoInput" class="custom-file-upload">CHOOSE FILE</label>
+    <input type="file" id="videoInput" accept=".mp4">
+    <!-- Container for file name and folder icon -->
+    <div id="fileContainer">
+        <p id="fileName"></p>
+        <img id="folderIcon" src="https://img.icons8.com/color/96/000000/folder-invoices.png" alt="Folder Icon">
+    </div>
+
+    <button id="extractBtn">EXTRACT AUDIO</button>
+
+    <div class="progress-bar" id="progressBar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Audio Preview -->
+    <audio id="audioPreview" class="audio-player" controls></audio>
+
+    <button id="downloadBtn">DOWNLOAD</button>
+
+    <footer>
+        @2025 Krithika N | All Rights Reserved
+    </footer>
+
+    <script>
+        let audioFile = "";
+
+        document.getElementById("videoInput").addEventListener("change", function() {
+            let fileNameElement = document.getElementById("fileName");
+            let folderIcon = document.getElementById("folderIcon");
+        
+            if (this.files[0]) {
+                fileNameElement.innerText = this.files[0].name;
+                folderIcon.style.display = "inline"; // Show the icon
+            } else {
+                fileNameElement.innerText = "";
+                folderIcon.style.display = "none"; // Hide if no file is selected
+            }
+        });
+        
+        document.getElementById("extractBtn").addEventListener("click", function() {
+            let fileInput = document.getElementById("videoInput").files[0];
+            if (!fileInput) {
+                alert("Please select a file first!");
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append("file", fileInput);
+
+            document.getElementById("progressBar").style.display = "block";
+            document.getElementById("progress").style.width = "0%";
+
+            fetch("/extract", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    audioFile = data.audio_file;
+
+                    setTimeout(() => {
+                        document.getElementById("progress").style.width = "100%";
+
+                        // Show audio preview before download
+                        let audioPreview = document.getElementById("audioPreview");
+                        audioPreview.src = `/static/audio/${audioFile}`;
+                        audioPreview.style.display = "block";
+
+                        // Show download button
+                        document.getElementById("downloadBtn").style.display = "block";
+
+                        document.getElementById("downloadBtn").onclick = function () {
+                            window.location.href = `/download/${audioFile}`;
+                        };
+                    }, 500);
+                } else {
+                    alert("Error: " + data.error);
+                }
+            })
+            .catch(error => {
+                alert("Something went wrong!");
+            });
+        });
+    </script>
+</body>
+</html>
