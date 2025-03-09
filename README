@@ -1,21 +1,21 @@
-# 🚀 Local Video to Audio Converter
+🚀 Local Video to Audio Converter
 
 A simple web app that converts local video files to audio.
 
-## 🌐 Live Demo
+🌐 Live Demo
 👉 [LocalVideo2Audio](https://localvideo2audio-production.up.railway.app/)
 
-## ⚡ Features
+⚡ Features
 - Upload video files 🎥
 - Extract and download audio 🎵
 - Easy-to-use UI
 
-## 🛠 Tech Stack
+🛠 Tech Stack
 - Frontend: HTML, CSS, JavaScript
 - Backend: Railway (Express.js, Flask, etc.)
 - Deployment: Railway
 
-## 🏗 Setup
+🏗 Setup
 1. Clone the repository  
    ```sh
    git clone 
