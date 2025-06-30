@@ -1,18 +1,28 @@
-# Video 2 Audio
-A web-based tool to effortlessly convert your video files into audio format. This application leverages the power of Python and Flask on the backend, coupled with a clean and responsive user interface built with HTML, CSS, and JavaScript. The core conversion functionality is handled by the robust and versatile FFmpeg library.
+# React To-Do App with Local Storage
+
+A clean and persistent To-Do list application built with React. Keep track of your tasks with full CRUD functionality, saving all your data directly in your browser's local storage.
 
 ## Features
-- Seamless Video to Audio Conversion: Easily convert a variety of video file formats into high-quality audio files.
 
-- Responsive User Interface: A clean and intuitive front-end built with HTML, CSS, and JavaScript ensures a smooth user experience across all devices.
+- **Create:** Easily add new tasks to your list.
 
-- Powerful Conversion Engine: Utilizes the industry-standard FFmpeg library for efficient and reliable audio extraction.
+- **Read:** View all your pending and completed tasks in a clear layout.
 
-- Lightweight and Scalable: Built with the Flask micro-framework, making the application lightweight and easy to extend.
+- **Update:** Edit existing tasks or mark them as complete.
 
-# Tech Stack
-- Backend: Python, Flask
+- **Delete:** Remove tasks you no longer need.
 
-- Frontend: HTML, CSS, JavaScript
+- **Persistent Storage:** Your to-do list is automatically saved to your browser's local storage, so your tasks will be there when you return.
 
-- Conversion: FFmpeg
+
+## How It Works
+
+1. **Add a Task:** Type a new task into the input field and press Enter or click the "Add" button.
+
+2. **Mark as Complete:** Click the checkbox next to a task to toggle its completion status.
+
+3. **Edit a Task:** Click the edit icon to modify the text of a task.
+
+4. **Delete a Task:** Click the delete icon to permanently remove a task from your list.
+
+All changes are saved in real-time.
