@@ -26,7 +26,7 @@ A web-based tool to effortlessly convert your video files into audio format. Thi
 ### With Video
 ![image](https://github.com/user-attachments/assets/1bc68d70-5511-406f-9926-be88179f7e92)
 
-### Final Output
+### Output
 ![image](https://github.com/user-attachments/assets/22f63560-8ebc-4a07-a019-4f501117e626)
 
 
